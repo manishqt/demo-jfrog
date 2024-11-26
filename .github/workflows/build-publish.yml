@@ -17,14 +17,16 @@ jobs:
            
        - name: Setup Node npm
          uses: actions/setup-node@v3
-           
-       - name: Set CLI Config
-         run: jf npm-config --global=true --repo-resolve=demo-npm --repo-deploy=demo-npm
 
        - name: Configure JFrog Server
          run: |
             jf c add my-server --url=${{ secrets.JF_URL }} --access-token=${{ secrets.JF_ACCESS_TOKEN }} --interactive=false
 
+           
+       - name: Set CLI Config
+         run: jf npm-config --global=true --repo-resolve=demo-npm --repo-deploy=demo-npm
+
+ 
        - name: Install Deps
          run: jf npm install
            
