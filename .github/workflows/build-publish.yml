@@ -1,5 +1,6 @@
 name: "JFrog Integration Example"
-on: push
+on:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,33 +15,3 @@ jobs:
          env:  
            JF_URL: ${{ secrets.JF_URL }}
            JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-           
-       - name: Setup Node npm
-         uses: actions/setup-node@v3
-
-       - name: Configure JFrog Server
-         run: |
-            jf c add my-server --url=${{ secrets.JF_URL }} --access-token=${{ secrets.JF_ACCESS_TOKEN }} --interactive=false
-
-           
-       - name: Set CLI Config
-         run: jf npm-config --global=true --repo-resolve=demo-npm --repo-deploy=demo-npm
-
- 
-       - name: Install Deps
-         run: jf npm install
-           
-       - name: Run tests
-         run: npm test
-         
-       - name: Publish
-         run: jf npm publish
-         
-       - name: Publish Build info With JFrog CLI
-         run: |
-          # Collect environment variables for the build
-          jf rt build-collect-env
-          # Collect VCS details from git and add them to the build
-          jf rt build-add-git
-          # Publish build info
-          jf rt build-publish
