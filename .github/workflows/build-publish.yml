@@ -12,7 +12,7 @@ jobs:
          
        - name: Trim and Save Branch Name
          run: |
-          BRANCH_NAME=$(echo "${GITHUB_REF}" | sed 's/refs\/heads\///')
+          BRANCH_NAME=$(echo "${GITHUB_REF}" | sed 's/refs\/heads\///' | tr '[:lower:]' '[:upper:]')
           echo $BRANCH_NAME
           SECRET_NAME="${BRANCH_NAME}_APP_KEY"
           echo "SC_NAME=$SECRET_NAME" >> $GITHUB_ENV
